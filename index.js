@@ -2,6 +2,10 @@
 
 var path = require('path');
 var initPosts = require('./lib/initPosts');
+var addAlgoliaObjectId = require('./lib/hooks/addAlgoliaObjectId');
+
+// it add an `algoliaOjbectId` variable in the front-matter of the post created
+hexo.on('new', addAlgoliaObjectId);
 
 // register `hexo algolia` command
 hexo.extend.console.register('algolia', 'Index your posts on Algolia', {
