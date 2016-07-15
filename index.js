@@ -1,10 +1,20 @@
 'use strict';
 
-var algolia = require('./lib/algolia');
+var path = require('path');
+var initPosts = require('./lib/initPosts');
 
 // register `hexo algolia` command
 hexo.extend.console.register('algolia', 'Index your posts on Algolia', {
   options: [{
     name: '-n, --no-clear', desc: 'Does not clear the existing index'
+  }, {
+    name: '-i, --init', desc: 'Add `algolia_object_id` variable for each post to be ready to index'
   }]
-}, algolia);
+}, function(args) {
+  var hexo = this;
+  var postsDir = path.resolve(process.cwd(), hexo.config.source_dir, '_posts');
+
+  if (args.i || args.init) {
+    initPosts(postsDir);
+  }
+});
