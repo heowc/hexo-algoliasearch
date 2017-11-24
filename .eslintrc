@@ -12,7 +12,12 @@
         "max-len": [1, 100, 4, {"ignoreUrls": true}]
     },
     "globals": {
-        "hexo": false
+        "hexo": false,
+        "createdPosts": false,
+        "updatedPosts": false,
+        "deletedPosts": false,
+        "isServerStarted": false,
+        "algoliaLocal": false,
     },
     "env": {
         "node": true
