@@ -192,9 +192,10 @@ describe('algolia', () => {
 
       const indexedPosts = algoliaIndex.saveObjects.mock.calls[0][0]
       // freeze ID of posts because we later use snapshots and these IDs change
-      algoliaIndex.saveObjects.mock.calls[0][0].forEach((post, index) => {
+      indexedPosts.forEach((post, index) => {
         post.objectID = index
       })
+      indexedPosts.sort(post => post.objectID)
 
       expect(algoliasearch).toHaveBeenCalledWith(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_API_KEY)
       expect(algoliaClient.initIndex).toHaveBeenCalledWith(process.env.ALGOLIA_INDEX_NAME)
@@ -217,14 +218,16 @@ describe('algolia', () => {
 
       const algoliaConfig = hexo.config.algolia
       // freeze ID of posts because we later use snapshots and these IDs change
-      algoliaIndex.saveObjects.mock.calls[0][0].forEach((post, index) => {
+      const indexexPosts = algoliaIndex.saveObjects.mock.calls[0][0]
+      indexexPosts.forEach((post, index) => {
         post.objectID = index
       })
+      indexexPosts.sort(post => post.objectID)
       expect(algoliasearch).toHaveBeenCalledWith(algoliaConfig.appId, algoliaConfig.adminApiKey)
       expect(algoliaClient.initIndex).toHaveBeenCalledWith(algoliaConfig.indexName)
       expect(algoliaIndex.clearIndex).toHaveBeenCalledTimes(1)
       expect(algoliaIndex.saveObjects).toHaveBeenCalledTimes(1)
-      expect(algoliaIndex.saveObjects.mock.calls).toMatchSnapshot()
+      expect(indexexPosts).toMatchSnapshot()
     })
 
     it('should not clear index and index posts on Algolia', async() => {
